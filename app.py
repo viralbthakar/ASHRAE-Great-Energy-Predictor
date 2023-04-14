@@ -42,7 +42,8 @@ dayofweek = st.number_input('Day of Week')
 month = st.number_input('Month')
 day = st.number_input('Day')
 isholiday = st.number_input('Holiday')
-season = st.number_input('Season')
+season = st.selectbox('Season', ('Autumn',
+                                 'Spring', 'Summer', 'Winter'))
 isdaytime = st.number_input('Day Time')
 relative_humidity = st.number_input('Relative Humidity')
 
@@ -77,6 +78,10 @@ meter_encoder = LabelEncoder()
 meter_encoder.classes_ = np.load(
     './models/meter_label_encoder.npy', allow_pickle=True)
 
+season_encoder = LabelEncoder()
+season_encoder.classes_ = np.load(
+    './models/season_label_encoder.npy', allow_pickle=True)
+
 model_dir = "./models"
 models = [f for f in os.listdir(model_dir) if os.path.splitext(f)[
     1] == '.joblib']
@@ -89,5 +94,6 @@ if estimate:
 
     df['primary_use'] = primary_use_encoder.transform(df['primary_use'])
     df['meter'] = meter_encoder.transform(df['meter'])
+    df['season'] = season_encoder.transform(df['season'])
 
     st.header(f"Estimated Energy Consumption: {model.predict(df)}")
