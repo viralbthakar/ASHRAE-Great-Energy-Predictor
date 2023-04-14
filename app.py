@@ -71,11 +71,11 @@ st.write(data_dict)
 
 primary_use_encoder = LabelEncoder()
 primary_use_encoder.classes_ = np.load(
-    '../models/primary_use_label_encoder.npy', allow_pickle=True)
+    './models/primary_use_label_encoder.npy', allow_pickle=True)
 
 meter_encoder = LabelEncoder()
 meter_encoder.classes_ = np.load(
-    '../models/meter_label_encoder.npy', allow_pickle=True)
+    './models/meter_label_encoder.npy', allow_pickle=True)
 
 model_dir = "./models"
 models = [f for f in os.listdir(model_dir) if os.path.splitext(f)[
