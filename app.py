@@ -19,7 +19,11 @@ st.write("Counterfactual Model Development for Energy Consumption Estimation")
 building_id = st.number_input('Building ID')
 meter = st.selectbox('Meter Type', ('electricity',
                      'steam', 'chilledwater', 'hotwater'))
-primary_use = st.selectbox('Primary Use', ())
+primary_use = st.selectbox('Primary Use', ('Education', 'Lodging/residential', 'Office',
+                                           'Entertainment/public assembly', 'Other', 'Retail', 'Parking',
+                                           'Public services', 'Warehouse/storage', 'Food sales and service',
+                                           'Religious worship', 'Healthcare', 'Utility', 'Technology/science',
+                                           'Manufacturing/industrial', 'Services'))
 square_feet = st.number_input('Square Feet')
 air_temperature = st.number_input('Air Temperature')
 cloud_coverage = st.number_input('Cloud Coverage')
