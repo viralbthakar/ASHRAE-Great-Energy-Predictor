@@ -1,6 +1,10 @@
 import streamlit as st
 import joblib
 import os
+from sklearn.preprocessing import LabelEncoder
+import joblib
+import pandas as pd
+import numpy as np
 
 
 st.set_page_config(
@@ -65,6 +69,14 @@ data_dict = {
 }
 st.write(data_dict)
 
+primary_use_encoder = LabelEncoder()
+primary_use_encoder.classes_ = np.load(
+    '../models/primary_use_label_encoder.npy', allow_pickle=True)
+
+meter_encoder = LabelEncoder()
+meter_encoder.classes_ = np.load(
+    '../models/meter_label_encoder.npy', allow_pickle=True)
+
 model_dir = "./models"
 models = [f for f in os.listdir(model_dir) if os.path.splitext(f)[
     1] == '.joblib']
@@ -72,4 +84,10 @@ model = st.selectbox('Select Model', models)
 estimate = st.button("Estimate")
 
 if estimate:
-    st.write(os.path.join(model_dir, model))
+    model = joblib.load(os.path.join(model_dir, model))
+    df = pd.DataFrame(data_dict, index=[0])
+
+    df['primary_use'] = primary_use_encoder.transform(df['primary_use'])
+    df['meter'] = meter_encoder.transform(df['meter'])
+
+    st.header(f"Estimated Energy Consumption: {model.predict(df)}")
