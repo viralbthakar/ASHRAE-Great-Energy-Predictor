@@ -1,4 +1,6 @@
 import streamlit as st
+import joblib
+import os
 
 
 st.set_page_config(
@@ -62,3 +64,12 @@ data_dict = {
     'relative_humidity': relative_humidity
 }
 st.write(data_dict)
+
+model_dir = "./models"
+models = [f for f in os.listdir(model_dir) if os.path.splitext(f)[
+    1] == '.joblib']
+model = st.selectbox('Select Model', models)
+estimate = st.button("Estimate")
+
+if estimate:
+    st.write(os.path.join(model_dir, model))
